@@ -1,16 +1,38 @@
 <template>
 <div class="col-xs-12 col-sm-6">
         <ul class="list-group">
-          <li
-            class="list-group-item"
-            v-for="index in 5">
-            Sunucu #{{ index }}
-          </li>
+          <app-server @click.native="sendToDetail(server)" v-for="server in servers" :serverData="server"></app-server>
+          
         </ul>
       </div>
 </template>
 
-<script></script>
+<script>
+    import Server from "./Server";
+    import { eventBus } from "../../main";
+    export default {
+      components : {
+        appServer : Server
+    },
+    data : function () {
+      return {
+        servers : [
+          {id : 1, status :  "Kritik"},
+          {id : 2, status :  "Normal"},
+          {id : 3, status :  "Tehlikede"},
+          {id : 4, status :  "Bilinmiyor"},
+        ]
+      }
+    },
+    methods : {
+      sendToDetail(server) {
+        eventBus.sendToServerData(server);
+      }
+    }
+  }
+
+
+</script>
 
 <style scoped>
   div{
